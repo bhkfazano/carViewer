@@ -1,4 +1,4 @@
-import { SELECT_CAR } from '../actions/index.js';
+import { SELECT_CAR } from '../../actions/index.js';
 import _ from 'lodash';
 
 export default function(state = {}, action) {

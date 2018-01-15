@@ -1,4 +1,4 @@
-import { LOGIN_USER, CREATE_USER, UPDATE_PASS, LOGOUT_USER, EDIT_USER, EDIT_PASSWORD } from '../actions/index.js';
+import { LOGIN_USER, CREATE_USER, UPDATE_PASS, LOGOUT_USER, EDIT_USER, EDIT_PASSWORD } from '../../actions/index.js';
 import _ from 'lodash';
 
 export default function(state = {}, action) {

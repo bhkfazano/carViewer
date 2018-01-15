@@ -1,4 +1,4 @@
-import { FETCH_CARS, ADD_CAR, DELETE_CAR, EDIT_CAR } from '../actions/index.js';
+import { FETCH_CARS, ADD_CAR, DELETE_CAR, EDIT_CAR } from '../../actions/index.js';
 import _ from 'lodash';
 
 export default function(state = {}, action) {

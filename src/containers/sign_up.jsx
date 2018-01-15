@@ -1,117 +1,83 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { createUser, checkForSign } from '../actions/index.js';
-import validator from 'validator';
-import axios from 'axios';
+
+import { Link } from 'react-router-dom';
+
+import { createUser } from '../actions/index.js';
+import { SignUpController } from '../controllers/index.js';
 
 class SignUp extends Component {
 
-  renderField(field) {
-
-    const className = `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`;
-
-    return (
-      <div className={className}>
-        <label>{field.label}</label>
-        <input
-          className="form-control"
-          type="text"
-          {...field.input}
-        />
-      <div className="text-help">
-          {field.meta.touched ? field.meta.error : ''}
-        </div>
-      </div>
-    );
+  constructor(props) {
+    super(props);
+    this.state = {
+      values: {
+        email: "",
+        first_name: "",
+        last_name: "",
+        personal_phone: "",
+        password: "",
+        retype_password: ""
+      }
+    };
+    this.controller = new SignUpController(this);
   }
 
-  async onSubmit(values) {
-    const user = await this.props.checkForSign(values);
-    if (!user.payload.data[0]) {
-      await this.props.createUser(values);
-      this.props.history.push('/user/cars');
-    } else {
-      alert('Email already registered!');
-    }
-
-  }
+  //const className = `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`;
 
   render() {
 
-    const { handleSubmit } = this.props;
+    const { handleChange, submitAction } = this.controller;
+    const { values } = this.state;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <Field
-          label="Email"
-          name="email"
-          component={this.renderField}
-        />
-        <Field
-          label="First Name"
-          name="first_name"
-          component={this.renderField}
-        />
-        <Field
-          label="Last Name"
-          name="last_name"
-          component={this.renderField}
-        />
-        <Field
-          label="Personal Phone"
-          name="personal_phone"
-          component={this.renderField}
-        />
-        <Field
-          type="password"
-          label="Password"
-          name="password"
-          component={this.renderField}
-        />
-        <Field
-          type="password"
-          label="Re-type Password"
-          name="retypepassword"
-          component={this.renderField}
-        />
-        <button type="submit" className="btn btn-primary">Submit</button>
-        <Link to="/" className="btn btn-danger">Cancel</Link>
+
+
+      <form className="form-horizontal">
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.email} type="email" className="form-control" placeholder="Enter email" id="email" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.first_name} className="form-control" id="first_name" placeholder="Enter First Name" onChange={event => handleChange(event)}/ >
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.last_name} className="form-control" placeholder="Enter Last Name" id="last_name" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.personal_phone} className="form-control" placeholder="Enter Phone" id="personal_phone" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.password} type="password" className="form-control" placeholder="Enter password" id="password" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.retype_password} type="password" className="form-control" placeholder="Retype password" id="retype_password" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="bbtt" >
+          <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Register</button>
+          <Link type="button" to="/" className="btn btn-outline-danger btn-block">Cancel</Link>
+        </div>
       </form>
     );
   }
 }
 
-
-function validate(values) {
-  const errors = {};
-
-  if (!values.first_name) {
-    errors.first_name = "Enter a valid name!";
-  }
-  if (!values.last_name) {
-    errors.last_name = "Enter a valid last name!";
-  }
-  if (!values.personal_phone) {
-    errors.personal_phone = "Enter a valid phone!";
-  }
-  if (!values.password || values.password.length < 8) {
-    errors.password = "Enter a password with at least 8 characters!";
-  }
-  if (values.retypepassword != values.password) {
-    errors.retypepassword = "Password do not match!";
-  }
-  if (!validator.isEmail(`${values.email}`)) {
-    errors.email = "Invalid email!";
-  }
-
-  return errors;
-}
-
-export default reduxForm({
-  validate: validate,
-  form: 'PostsNewForm'
-})(
-  connect(null, { createUser, checkForSign })(SignUp)
-);
+export default connect(null, { createUser })(SignUp)

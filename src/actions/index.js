@@ -16,7 +16,7 @@ export const SELECT_CAR = 'SELECT_CAR';
 export const UNSELECT_CAR = 'UNSELECT_CAR';
 
 export async function createUser(values) {
-  const request = await axios.post('http://localhost:3000/users', values)
+  const request = await axios.post('http://localhost:2000/users', values)
 
 
   return {
@@ -41,7 +41,7 @@ export function logout() {
 export async function fetchUserCars(user) {
   const userid = user._id;
 
-  const request = await axios.get(`http://localhost:3000/users/${userid}/cars`);
+  const request = await axios.get(`http://localhost:2000/users/${userid}/cars`);
   const payload = _.indexBy(request.data, '_id');
   return {
     type: FETCH_CARS,
@@ -49,28 +49,9 @@ export async function fetchUserCars(user) {
   };
 }
 
-export async function userCheck(values) {
-  const email = values.email;
-  const password = values.password;
-  const request = await axios.post(`http://localhost:3000/users/usercheck`, {email: email, password: password});
-  return {
-    type: CHECK_USER,
-    payload: request
-  };
-}
-
-export async function checkForSign(values) {
-  const email = values.email;
-  const request = await axios.post(`http://localhost:3000/users/signup`, {email: email});
-  return {
-    type: SIGN_USER,
-    payload: request
-  };
-}
-
 export async function editUser(user, patch) {
   const userid = user._id;
-  const request = await axios.put(`http://localhost:4000/users/${userid}`, patch);
+  const request = await axios.put(`http://localhost:2000/users/${userid}`, patch);
   return {
     type: EDIT_USER,
     payload: patch
@@ -79,7 +60,7 @@ export async function editUser(user, patch) {
 
 export async function deleteUser(user) {
   const userid = user._id;
-  const request = await axios.delete(`http://localhost:4000/users/${userid}`);
+  const request = await axios.delete(`http://localhost:2000/users/${userid}`);
   return {
     type: 'LOGOUT_USER'
   };

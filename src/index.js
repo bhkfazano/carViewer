@@ -7,13 +7,13 @@ import promise from 'redux-promise';
 
 import reducers from './reducers';
 
-import Login from './components/login.jsx';
-import SignUp from './components/sign_up.jsx';
-import Cars from './components/get_user_cars.jsx';
-import EditUser from './components/edit_user.jsx';
-import EditPassword from './components/edit_password.jsx';
-import AddCar from './components/add_car.jsx';
-import EditCar from './components/edit_car.jsx';
+import Login from './containers/login.jsx';
+import SignUp from './containers/sign_up.jsx';
+import Cars from './containers/get_user_cars.jsx';
+import EditUser from './containers/edit_user.jsx';
+import EditPassword from './containers/edit_password.jsx';
+import AddCar from './containers/add_car.jsx';
+import EditCar from './containers/edit_car.jsx';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 

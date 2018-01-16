@@ -1,10 +1,12 @@
 import MainController from './MainController.js';
+import { IndexRepository } from '../../api/index.js';
 import axios from 'axios';
 
 export default class IndexController extends MainController {
 
   constructor(context) {
     super(context);
+    this.indexRepo = new IndexRepository();
     this.handleDelete = this.handleDelete.bind(context);
     this.handleEdit = this.handleEdit.bind(context);
     this.fetch = this.fetch.bind(context);
@@ -13,7 +15,7 @@ export default class IndexController extends MainController {
 
   async handleDelete(car) {
     const carid = car._id;
-    const request = await axios.delete(`http://localhost:2000/cars/${carid}`);
+    const request = await this.controller.indexRepo.deleteCar(carid);
     await this.props.deleteCar(car);
   }
 
@@ -24,7 +26,7 @@ export default class IndexController extends MainController {
 
   async fetch(user) {
     const userid = user._id;
-    const request = await axios.get(`http://localhost:2000/users/${userid}/cars`);
+    const request = await this.controller.indexRepo.fetch(userid);
     const payload = _.indexBy(request.data, '_id');
     this.props.fetchUserCars(payload)
   }

@@ -1,10 +1,12 @@
 import MainController from './MainController.js';
+import { UserRepository } from '../../api/index.js';
 import axios from 'axios';
 
 export default class EditUserController extends MainController {
 
   constructor(context) {
     super(context);
+    this.userRepo = new UserRepository();
     this.submitAction = this.submitAction.bind(context);
     this.deleteUser = this.deleteUser.bind(context);
   }
@@ -12,7 +14,7 @@ export default class EditUserController extends MainController {
   async submitAction() {
     const values = this.state.values;
     const userid = this.props.user._id;
-    const request = await axios.put(`http://localhost:2000/users/${userid}`, values);
+    const request = await this.controller.userRepo.editUser(userid, values);
     await this.props.editUser(values);
     this.props.history.push('/user/cars');
   }
@@ -20,7 +22,7 @@ export default class EditUserController extends MainController {
   async deleteUser() {
     const user = this.props.user;
     const userid = user._id;
-    const request = await axios.delete(`http://localhost:2000/users/${userid}`);
+    const request = await this.controller.userRepo.deleteUser(userid);
     await this.props.deleteUser();
     this.props.history.push('/');
   }

@@ -23,6 +23,9 @@ class EditUser extends Component {
 
   render() {
 
+    const { email } = this.state.values;
+    const isEnabled = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+
     const { handleChange, submitAction, deleteUser } = this.controller;
     const { values } = this.state;
 
@@ -55,7 +58,7 @@ class EditUser extends Component {
         </div>
 
         <div className="bbtt" >
-          <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
+          <button disabled={!isEnabled} type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
           <button type="button" className="btn btn-outline-danger btn-block" onClick={deleteUser} >Delete User</button>
         </div>
 

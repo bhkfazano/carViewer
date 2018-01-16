@@ -22,7 +22,7 @@ export default class CarCard extends Component {
           <div><strong>Color</strong> {car.color}</div>
         </td>
         <td>
-          <div className="btn-group-vertical d-flex">
+          <div className="btn-group btn-group-vertical d-flex">
             <button
               className="btn btn-outline-info w-100"
               onClick={() => handleEdit(car)}

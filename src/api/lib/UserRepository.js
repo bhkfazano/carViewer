@@ -18,4 +18,8 @@ export default class UserRepository extends BaseRepository {
     return await this.delete(`/users/${userid}`);
   }
 
+	async checkPassword(body) {
+		return await this.post('/users/usercheck', body);
+	}
+
 }

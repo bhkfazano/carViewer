@@ -21,8 +21,15 @@ class Login extends Component {
 
 
   render() {
+
     const { submitAction, handleChange } = this.controller;
     const { values } = this.state;
+
+    const { email, password } = this.state.values;
+    const isEnabled =
+      email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) &&
+      password.length >= 6;
+
     return (
       <form className="form-horizontal">
         <div className="form-group">

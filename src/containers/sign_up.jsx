@@ -18,17 +18,28 @@ class SignUp extends Component {
         personal_phone: "",
         password: "",
         retype_password: ""
+      },
+      touched: {
+        email: false,
+        password: false,
       }
     };
     this.controller = new SignUpController(this);
   }
 
-  //const className = `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`;
 
   render() {
 
+    //const className = `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`;
+
     const { handleChange, submitAction } = this.controller;
     const { values } = this.state;
+
+    const { email, password, retype_password } = this.state.values;
+    const isEnabled =
+      email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) &&
+      password.length >= 6 &&
+      password == retype_password;
 
     return (
 
@@ -71,7 +82,7 @@ class SignUp extends Component {
         </div>
 
         <div className="bbtt" >
-          <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Register</button>
+          <button disabled={!isEnabled} type="button" className="btn btn-success btn-block" onClick={submitAction} >Register</button>
           <Link type="button" to="/" className="btn btn-outline-danger btn-block">Cancel</Link>
         </div>
       </form>

@@ -36,12 +36,12 @@ class ShowCars extends Component {
   render() {
     return (
       <div>
-        <table className="table table-sm">
+        <table className="table table-hover mt-4">
           <tbody>
             {this.renderCars()}
           </tbody>
         </table>
-        <div className="btn-group d-flex">
+        <div className="btn-group d-flex mb-5">
           <Link className="btn btn-info w-100" to="/user/edit">
             Edit User
           </Link>

@@ -26,6 +26,9 @@ class AddCar extends Component {
 
   render() {
 
+    const { brand, model, year, price, color } = this.state.values;
+    const isEnabled = brand.length >=3 && model.length >=3 && year.length >=3 && price.length >=3 && color.length >=3;
+
     const { handleChange, submitAction } = this.controller;
     const { values } = this.state;
 
@@ -69,7 +72,7 @@ class AddCar extends Component {
         </div>
 
         <div className="bbtt" >
-          <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
+          <button disabled={!isEnabled} type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
           <Link type="button" to="/user/cars" className="btn btn-outline-danger btn-block">Cancel</Link>
         </div>
       </form>

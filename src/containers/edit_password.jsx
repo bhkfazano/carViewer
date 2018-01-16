@@ -22,6 +22,9 @@ class EditPassword extends Component {
 
   render() {
 
+    const { retype_new_password, new_password } = this.state.values;
+    const isEnabled = new_password.length >= 6 && new_password == retype_new_password;
+
     const { handleChange, submitAction } = this.controller;
     const { values } = this.state;
 
@@ -47,7 +50,7 @@ class EditPassword extends Component {
         </div>
 
         <div className="bbtt" >
-          <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
+          <button disabled={!isEnabled} type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
           <Link type="button" to="/user/cars" className="btn btn-outline-danger btn-block">Cancel</Link>
         </div>
       </form>

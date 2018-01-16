@@ -12,7 +12,6 @@ export default function(state = {}, action) {
   case EDIT_USER:
     //action.payload.password = state.password;
     //return action.payload;
-    console.log(action.payload);
     return {...action.payload, password: state.password, _id:state._id};
   case EDIT_PASSWORD:
     return {...state, password: action.payload};

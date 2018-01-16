@@ -14,14 +14,12 @@ export default class SignUpController extends MainController {
     const request = await axios.post(`http://localhost:2000/users/signup`, {email: email});
     console.log(request);
     if (!request.data[0]) {
-      await this.props.createUser(values);
+      const request = await axios.post('http://localhost:2000/users', values)
+      await this.props.createUser(request);
       this.props.history.push('/user/cars');
     } else {
       alert('Email already registered!');
     }
   }
-
-
-
 
 }

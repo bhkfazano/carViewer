@@ -15,13 +15,10 @@ export const EDIT_CAR = 'EDIT_CAR';
 export const SELECT_CAR = 'SELECT_CAR';
 export const UNSELECT_CAR = 'UNSELECT_CAR';
 
-export async function createUser(values) {
-  const request = await axios.post('http://localhost:2000/users', values)
-
-
+export function createUser(values) {
   return {
     type: CREATE_USER,
-    payload: request
+    payload: values
   };
 }
 
@@ -38,69 +35,48 @@ export function logout() {
   };
 }
 
-export async function fetchUserCars(user) {
-  const userid = user._id;
-
-  const request = await axios.get(`http://localhost:2000/users/${userid}/cars`);
-  const payload = _.indexBy(request.data, '_id');
+export function fetchUserCars(cars) {
   return {
     type: FETCH_CARS,
-    payload: payload
+    payload: cars
   };
 }
 
 export async function editUser(user, patch) {
-  const userid = user._id;
-  const request = await axios.put(`http://localhost:2000/users/${userid}`, patch);
   return {
     type: EDIT_USER,
     payload: patch
   };
 }
 
-export async function deleteUser(user) {
-  const userid = user._id;
-  const request = await axios.delete(`http://localhost:2000/users/${userid}`);
+export async function deleteUser() {
   return {
     type: 'LOGOUT_USER'
   };
 }
 
-export async function editPassword(user, password) {
-  const userid = user._id;
-  const request = await axios.put(`http://localhost:4000/users/${userid}`, {password: password});
+export function editPassword(password) {
   return {
     type: EDIT_PASSWORD,
     payload: password
   };
 }
 
-export async function addCar(user, values) {
-  const userid = user._id;
-  const car = {...values, user_id: userid};
-  const request = await axios.post(`http://localhost:4000/users/${userid}/cars`, car);
-
-
+export function addCar(car) {
   return {
     type: ADD_CAR,
-    payload: request
+    payload: car
   };
 }
 
-export async function deleteCar(car) {
-  const carid = car._id;
-  const request = await axios.delete(`http://localhost:4000/cars/${carid}`);
+export function deleteCar(car) {
   return {
     type: DELETE_CAR,
     payload: car
   };
 }
 
-export async function editCar(car, patch) {
-  const carid = car._id;
-  patch._id = car._id;
-  patch.user_id = car.user_id;
-  const request = await axios.put(`http://localhost:4000/cars/${carid}`, patch);
+export function editCar(patch) {
   return {
     type: EDIT_CAR,
     payload: patch

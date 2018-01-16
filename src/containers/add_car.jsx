@@ -1,108 +1,84 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import { Link } from 'react-router-dom';
+
 import { addCar } from '../actions/index.js';
-import validator from 'validator';
+import { AddCarController } from '../controllers/index.js';
+
 
 class AddCar extends Component {
 
-  renderField(field) {
-
-    const className = `form-group ${field.meta.touched && field.meta.error ? 'has-danger' : ''}`;
-
-    return (
-      <div className={className}>
-        <label>{field.label}</label>
-        <input
-          className="form-control"
-          type="text"
-          {...field.input}
-        />
-      <div className="text-help">
-          {field.meta.touched ? field.meta.error : ''}
-        </div>
-      </div>
-    );
-  }
-
-  async onSubmit(values) {
-    const car = await this.props.addCar(this.props.user, values);
-    this.props.history.push('/user/cars');
+  constructor(props) {
+    super(props);
+    this.state = {
+      values: {
+        brand: "",
+        model: "",
+        year: "",
+        price: "",
+        color: "",
+        image_url: ""
+      }
+    };
+    this.controller = new AddCarController(this);
   }
 
   render() {
 
-    const { handleSubmit } = this.props;
+    const { handleChange, submitAction } = this.controller;
+    const { values } = this.state;
 
     return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <Field
-          label="Brand"
-          name="brand"
-          component={this.renderField}
-        />
-        <Field
-          label="Model"
-          name="model"
-          component={this.renderField}
-        />
-        <Field
-          label="Year"
-          name="year"
-          component={this.renderField}
-        />
-        <Field
-          label="Price"
-          name="price"
-          component={this.renderField}
-        />
-        <Field
-          label="Color"
-          name="color"
-          component={this.renderField}
-        />
-      <input type="file" name="file"/>
-        <button type="submit" className="btn btn-primary">Submit</button>
-        <Link to="/user/cars" className="btn btn-danger">Cancel</Link>
+      <form className="form-horizontal">
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.brand} className="form-control" placeholder="Enter brand" id="brand" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.model} className="form-control" id="model" placeholder="Enter model" onChange={event => handleChange(event)}/ >
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.year} className="form-control" placeholder="Enter year" id="year" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.price} className="form-control" placeholder="Enter price" id="price" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.color} className="form-control" placeholder="Enter color" id="color" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-12">
+            <input value={values.image_url} className="form-control" placeholder="Enter image url" id="image_url" onChange={event => handleChange(event)} />
+          </div>
+        </div>
+
+        <div className="bbtt" >
+          <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
+          <Link type="button" to="/user/cars" className="btn btn-outline-danger btn-block">Cancel</Link>
+        </div>
       </form>
     );
   }
 }
 
-
-function validate(values) {
-  const errors = {};
-
-  if (!values.brand) {
-    errors.Brand = "Enter a valid brand!";
-  }
-  if (!values.model) {
-    errors.model = "Enter a valid model!";
-  }
-  if (!values.year) {
-    errors.year = "Enter a year!";
-  }
-  if (!values.price) {
-    errors.price = "Enter a price!";
-  }
-  if (!values.image_url) {
-    errors.image_url = "Enter a image url!";
-  }
-  if (!values.color) {
-    errors.color = "Invalid color!";
-  }
-
-  return errors;
-}
-
 function mapStateToProps(state) {
-  return {user: state.currentUser};
+  return { user: state.currentUser };
 }
 
-export default reduxForm({
-  validate: validate,
-  form: 'PostsNewForm'
-})(
-  connect(mapStateToProps, { addCar })(AddCar)
-);
+export default connect(mapStateToProps, { addCar })(AddCar);

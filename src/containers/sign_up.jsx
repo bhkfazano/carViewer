@@ -32,7 +32,6 @@ class SignUp extends Component {
 
     return (
 
-
       <form className="form-horizontal">
 
         <div className="form-group">

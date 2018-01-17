@@ -14,4 +14,8 @@ export default class CarRepository extends BaseRepository {
     return await this.put(`/cars/${carid}`, body);
   }
 
+	async uploadCar(body) {
+		return await this.post('/upload', body);
+	}
+
 }

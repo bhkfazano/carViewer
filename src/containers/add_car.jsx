@@ -29,7 +29,7 @@ class AddCar extends Component {
     const { brand, model, year, price, color } = this.state.values;
     const isEnabled = brand.length >=3 && model.length >=3 && year.length >=3 && price.length >=3 && color.length >=3;
 
-    const { handleChange, submitAction } = this.controller;
+    const { handleChange, handleUpload, submitAction } = this.controller;
     const { values } = this.state;
 
     return (
@@ -67,7 +67,7 @@ class AddCar extends Component {
 
         <div className="form-group">
           <div className="col-sm-12">
-            <input value={values.image_url} className="form-control" placeholder="Enter image url" id="image_url" onChange={event => handleChange(event)} />
+            <input type="file" className="form-control" ref="fileinput" onChange={handleUpload} />
           </div>
         </div>
 

@@ -43,7 +43,7 @@ class Login extends Component {
           </div>
         </div>
         <div className="bbtt" >
-          <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Login</button>
+          <button disabled={!isEnabled} type="button" className="btn btn-success btn-block" onClick={submitAction} >Login</button>
           <Link type="button" to="/signup" className="btn btn-outline-info btn-block">Sign Up</Link>
         </div>
       </form>

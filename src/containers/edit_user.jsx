@@ -12,10 +12,10 @@ class EditUser extends Component {
     super(props);
     this.state = {
       values: {
-        email: "",
-        first_name: "",
-        last_name: "",
-        personal_phone: ""
+        email: this.props.user.email,
+        first_name: this.props.user.first_name,
+        last_name: this.props.user.last_name,
+        personal_phone: this.props.user.personal_phone
       }
     };
     this.controller = new EditUserController(this);
@@ -59,6 +59,7 @@ class EditUser extends Component {
 
         <div className="bbtt" >
           <button disabled={!isEnabled} type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
+          <Link type="button" to="/user/cars" className="btn btn-outline-danger btn-block">Cancel</Link>
           <button type="button" className="btn btn-outline-danger btn-block" onClick={deleteUser} >Delete User</button>
         </div>
 

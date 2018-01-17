@@ -12,13 +12,13 @@ class EditCar extends Component {
     super(props);
     this.state = {
       values: {
-        brand: "",
-        model: "",
-        year: "",
-        price: "",
-        color: "",
-        image_url: "",
-        _id: ""
+        brand: this.props.car.brand,
+        model: this.props.car.model,
+        year: this.props.car.year,
+        price: this.props.car.price,
+        color: this.props.car.color,
+        image_url: this.props.car.image_url,
+        _id: this.props.car._id
       }
     };
     this.controller = new EditCarController(this);
@@ -72,7 +72,7 @@ class EditCar extends Component {
           <button type="button" className="btn btn-success btn-block" onClick={submitAction} >Submit</button>
           <Link type="button" to="/user/cars" className="btn btn-outline-danger btn-block">Cancel</Link>
         </div>
-        
+
       </form>
     );
   }

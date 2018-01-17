@@ -21,10 +21,10 @@ export default class LoginController extends MainController {
   async submitAction() {
     const values = {...this.state.values}
     const user = await this.controller.loginAction(values);
-    if (!user.data[0]) {
+    if (!user.data || user.data.status == 1) {
       alert("Email or password are incorrect!!");
     } else {
-      await this.props.login(user.data[0]);
+      await this.props.login(user.data);
       this.props.history.push('/user/cars');
     }
   }

@@ -15,10 +15,11 @@ export default class editPassword extends MainController {
     const old_password = this.state.values.old_password;
     const new_password = this.state.values.new_password;
     const check = await this.controller.userRepo.checkPassword({email:email, password:old_password});
-    if (check.data[0]) {
+    if (check.data.status != 1) {
       const userid = this.props.user._id;
       const request = await this.controller.userRepo.editPassword(userid, {password: new_password});
-      await this.props.editPassword(new_password);
+      console.log("check", request);
+      await this.props.editPassword(request.data);
       this.props.history.push('/user/cars');
     } else {
       alert("Old password is incorrect!");
